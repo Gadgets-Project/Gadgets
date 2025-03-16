@@ -3,46 +3,130 @@
 namespace App\Controllers;
 
 use App\Models\ArticleModel;
+use App\Entities\Article;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Articles extends BaseController
 {
-    public function index(): string
+    private ArticleModel $model;
+
+    public function __construct()
     {
-        // $db = db_connect();
+        $this->model = new ArticleModel;
+    }
 
-        // $db->listTables(); 
+    public function index()
+    {
+        $data = $this->model->findAll();
 
-        $model = new ArticleModel();
-
-        $data = $model->findAll();
-
-        return view('Articles/index.php', [
-            'articles' => $data
+        return view("Articles/index", [
+            "articles" => $data
         ]);
     }
 
     public function show($id)
     {
-        $model = new ArticleModel; 
+        $article = $this->getArticleOr404($id);
 
-        $article = $model->find($id); 
-
-        return view('Articles/show.php', [
-            'article' => $article
+        return view("Articles/show", [
+            "article" => $article
         ]);
     }
 
     public function new()
     {
-        return view('Articles/new');
+        return view("Articles/new", [
+            "article" => new Article
+        ]);
     }
 
     public function create()
     {
-        $model = new ArticleModel();
+        $article = new Article($this->request->getPost());
 
-        $model->insert($this->request->getPost());
+        $id = $this->model->insert($article);
 
-        dd($model->insertID);
+        if ($id === false) {
+
+            return redirect()->back()
+                             ->with("errors", $this->model->errors())
+                             ->withInput();
+
+        }
+
+        return redirect()->to("articles/$id")
+                         ->with("message", "Article saved.");
+    }
+
+    public function edit($id)
+    {
+        $article = $this->getArticleOr404($id);
+
+        return view("Articles/edit", [
+            "article" => $article
+        ]);
+    }
+
+    public function update($id)
+    {
+        $article = $this->getArticleOr404($id);
+
+        $article->fill($this->request->getPost());
+
+        // Unset the _method field if it exists
+        if (isset($article->_method)) {
+            unset($article->_method);
+        }
+
+        if ( ! $article->hasChanged()) {
+
+            return redirect()->back()
+                             ->with("message", "Nothing to update.");
+
+        }
+
+        if ($this->model->save($article)) {
+
+            return redirect()->to("articles/$id")
+                             ->with("message", "Article updated.");
+
+        }
+
+        return redirect()->back()
+                         ->with("errors", $this->model->errors())
+                         ->withInput();
+    }
+
+    public function confirmDelete($id)
+    {
+        $article = $this->getArticleOr404($id);
+
+        return view("Articles/delete", [
+            "article" => $article
+        ]);
+    }
+
+    public function delete($id)
+    {
+        $article = $this->getArticleOr404($id);
+
+        $this->model->delete($id);
+
+        return redirect()->to("articles")
+                            ->with("message", "Article deleted.");
+
+    }
+
+    private function getArticleOr404($id): Article
+    {
+        $article = $this->model->find($id);
+
+        if ($article === null) {
+
+            throw new PageNotFoundException("Article with id $id not found");
+
+        }
+
+        return $article;
     }
 }

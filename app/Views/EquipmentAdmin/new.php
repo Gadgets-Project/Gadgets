@@ -1,10 +1,10 @@
 <?= $this->extend("layouts/default") ?>
 
-<?= $this->section("title") ?>New Article<?= $this->endSection() ?>
+<?= $this->section("title") ?>New Equipment<?= $this->endSection() ?>
 
 <?= $this->section("content") ?>
 
-<h1>New Article</h1>
+<h1>New Equipment</h1>
 
 <?php if (session()->has("errors")): ?>
 
@@ -16,10 +16,10 @@
 
 <?php endif; ?>
 
-<?= form_open("articles") ?>
+<?= form_open("equipmentadmin") ?>
 
-<?= $this->include("Articles/form") ?>
+<?= $this->include("EquipmentAdmin/form") ?>
 
-</form>
+<?= form_close() ?>
 
 <?= $this->endSection() ?>

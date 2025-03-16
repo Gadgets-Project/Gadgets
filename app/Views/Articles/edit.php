@@ -1,10 +1,10 @@
 <?= $this->extend("layouts/default") ?>
 
-<?= $this->section("title") ?>New Article<?= $this->endSection() ?>
+<?= $this->section("title") ?>Edit Article<?= $this->endSection() ?>
 
 <?= $this->section("content") ?>
 
-<h1>New Article</h1>
+<h1>Edit Article</h1>
 
 <?php if (session()->has("errors")): ?>
 
@@ -16,10 +16,12 @@
 
 <?php endif; ?>
 
-<?= form_open("articles") ?>
+<?= form_open("articles/update/" . $article->id) ?>
+
+<input type="hidden" name="_method" value="patch">
 
 <?= $this->include("Articles/form") ?>
 
-</form>
+<?= form_close() ?>
 
 <?= $this->endSection() ?>
