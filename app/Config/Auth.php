@@ -47,6 +47,7 @@ class Auth extends ShieldAuth
      */
     public array $views = [
         'login'                       => '\CodeIgniter\Shield\Views\login',
+        // 'login' => 'Auth/login', 
         'register'                    => '\CodeIgniter\Shield\Views\register',
         'layout'                      => '\CodeIgniter\Shield\Views\layout',
         'action_email_2fa'            => '\CodeIgniter\Shield\Views\email_2fa_show',
@@ -80,6 +81,7 @@ class Auth extends ShieldAuth
         'force_reset'       => '/',
         'permission_denied' => '/',
         'group_denied'      => '/',
+        // 'admin_login'       => '/equipmentadmin',
     ];
 
     /**
@@ -436,10 +438,22 @@ class Auth extends ShieldAuth
      */
     public function loginRedirect(): string
     {
-        $session = session();
-        $url     = $session->getTempdata('beforeLoginUrl') ?? setting('Auth.redirects')['login'];
 
-        return $this->getUrl($url);
+            // $session = session();
+            // $user = $session->get('user');
+
+            // if ($user && $user->is_admin) {
+            //     $url = setting('Auth.redirects')['admin_login'];
+            // } else {
+            //     $url = $session->getTempdata('beforeLoginUrl') ?? setting('Auth.redirects')['login'];
+            // }
+
+            // return $this->getUrl($url);
+            
+            // $session = session();
+            // $url     = $session->getTempdata('beforeLoginUrl') ?? setting('Auth.redirects')['login'];
+            return $this->getUrl('/equipmentstaff');
+            // return $this->getUrl($url);
     }
 
     /**

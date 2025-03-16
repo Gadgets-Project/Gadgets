@@ -1,20 +1,42 @@
 <?= $this->extend("layouts/default") ?>
 
-<?= $this->section("title") ?>Articles<?= $this->endSection() ?>
+<?= $this->section("title") ?>Available Equipment<?= $this->endSection() ?>
 
 <?= $this->section("content") ?>
 
-    <h1>Articles</h1>
+<h1>Available Equipment</h1>
 
-    <a href="<?= url_to("Articles::new") ?>">New</a>
 
-    <?php foreach ($articles as $article): ?>
 
-        <article>
-            <h2><a href="<?= site_url('/articles/' . $article->id) ?>"><?= esc($article->title) ?></a></h2>
-            <p><?= esc($article->content) ?></p>
-        </article>
-
-    <?php endforeach; ?>
+<?php if (!empty($equipment) && is_array($equipment)): ?>
+    <table>
+        <thead>
+            <tr>
+                <th>Reserve</th> <!-- New column for reservations -->
+                <th>Equipment ID</th>
+                <th>Type</th>
+                <th>Brand</th>
+                <th>Serial Number</th>
+                <th>Model</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($equipment as $item): ?>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="reserve[]" value="<?= esc($item->equipment_id) ?>"> <!-- Checkbox for reservation -->
+                    </td>
+                    <td><?= esc($item->equipment_id) ?></td>
+                    <td><?= esc($item->equipment_type) ?></td>
+                    <td><?= esc($item->brand) ?></td>
+                    <td><?= esc($item->serial_number) ?></td>
+                    <td><?= esc($item->model) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p>No equipment found.</p>
+<?php endif; ?>
 
 <?= $this->endSection() ?>

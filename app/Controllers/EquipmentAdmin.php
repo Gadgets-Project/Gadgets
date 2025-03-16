@@ -19,7 +19,7 @@ class EquipmentAdmin extends BaseController
 
     public function index()
     {
-        $data['equipment'] = $this->viewModel->findAll();
+        $data['equipment'] = $this->viewModel->orderBy('equipment_id', 'ASC')->findAll();
         return view('EquipmentAdmin/index', $data);
     }
 

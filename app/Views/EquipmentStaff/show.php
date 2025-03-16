@@ -1,15 +1,16 @@
 <?= $this->extend("layouts/default") ?>
 
-<?= $this->section("title") ?>Article<?= $this->endSection() ?>
+<?= $this->section("title") ?>Equipment Details<?= $this->endSection() ?>
 
 <?= $this->section("content") ?>
 
-<h1><?= esc($article->title) ?></h1>
+<h1>Equipment Details</h1>
 
-<p><?= esc($article->content) ?></p>
+<p><strong>Equipment ID:</strong> <?= esc($equipment->equipment_id) ?></p>
+<p><strong>Type:</strong> <?= esc($equipment->equipment_type) ?></p>
+<p><strong>Brand:</strong> <?= esc($equipment->brand) ?></p>
+<p><strong>Serial Number:</strong> <?= esc($equipment->serial_number) ?></p>
+<p><strong>Model:</strong> <?= esc($equipment->model) ?></p>
 
-<a href="<?= url_to("Articles::edit", $article->id) ?>">Edit</a>
-
-<a href="<?= url_to("Articles::confirmDelete", $article->id) ?>">Delete</a>
 
 <?= $this->endSection() ?>
