@@ -34,6 +34,7 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        //'method'        => MethodFilter::class,
     ];
 
     /**
@@ -70,15 +71,16 @@ class Filters extends BaseFilters
     public array $globals = [
         'before' => [
             // 'honeypot',
-            // 'csrf',
+            //'csrf',
             // 'invalidchars',
+            //'method',
         ],
         'after' => [
             // 'honeypot',
             // 'secureheaders',
-        ],
+            //'toolbar',
+        ]
     ];
-
     /**
      * List of filter aliases that works on a
      * particular HTTP method (GET, POST, etc.).

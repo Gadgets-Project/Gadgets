@@ -6,6 +6,13 @@
 
 <h1>Equipment Inventory</h1>
 
+<!-- Flash Message -->
+<?php if (session()->getFlashdata('message')): ?>
+    <div class="alert alert-success">
+        <?= session()->getFlashdata('message') ?>
+    </div>
+<?php endif; ?>
+
 <a href="<?= url_to("EquipmentAdmin::new") ?>">New</a>
 
 <?php if (!empty($equipment) && is_array($equipment)): ?>
@@ -35,13 +42,14 @@
                     <td><?= esc($item->equipment_type_id) ?></td>
                     <td><?= esc($item->equipment_status_id) ?></td>
                     <td>
-                        <a href="<?= site_url('/equipmentadmin/' . $item->id . '/edit') ?>">Edit</a>
-                        <a href="<?= site_url('/equipmentadmin/' . $item->id . '/delete') ?>">Delete</a>
+                        <a href="<?= site_url('/equipmentadmin/' . $item['equipment_id'] . '/edit') ?>">Edit</a>
+                        <a href="<?= site_url('/equipmentadmin/' . $item->equipment_id . '/delete') ?>">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+    
 <?php else: ?>
     <p>No equipment found.</p>
 <?php endif; ?>

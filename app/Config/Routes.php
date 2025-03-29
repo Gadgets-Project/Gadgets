@@ -56,20 +56,58 @@ $routes->get("articles/(:num)/delete", "Articles::confirmDelete/$1");
 service('auth')->routes($routes);
 
 //these are all the routes for the equipmentadmin controller
+// $routes->get("equipmentadmin", "EquipmentAdmin::index");
+// $routes->get("equipmentadmin/(:num)", "EquipmentAdmin::show/$1");
+// $routes->get("equipmentadmin/new", "EquipmentAdmin::new", ["as" => "new_equipment"]);
+// $routes->post("equipmentadmin", "EquipmentAdmin::create");
+// $routes->get("equipmentadmin/(:num)/edit", "EquipmentAdmin::edit/$1");
+// $routes->post("equipmentadmin/update/(:num)", "EquipmentAdmin::update/$1");
+// $routes->match(["get", "post", "delete"], "equipmentadmin/delete/(:num)", "EquipmentAdmin::delete/$1");
+// $routes->get("equipmentadmin/(:num)/delete", "EquipmentAdmin::confirmDelete/$1");
+// $routes->get("equipmentadmin/delete/(:num)", "EquipmentAdmin::confirmDelete/$1");
+
+// Routes for the EquipmentAdmin controller
 $routes->get("equipmentadmin", "EquipmentAdmin::index");
 $routes->get("equipmentadmin/(:num)", "EquipmentAdmin::show/$1");
 $routes->get("equipmentadmin/new", "EquipmentAdmin::new", ["as" => "new_equipment"]);
 $routes->post("equipmentadmin", "EquipmentAdmin::create");
 $routes->get("equipmentadmin/(:num)/edit", "EquipmentAdmin::edit/$1");
 $routes->post("equipmentadmin/update/(:num)", "EquipmentAdmin::update/$1");
-$routes->match(["get", "post", "delete"], "equipmentadmin/delete/(:num)", "EquipmentAdmin::delete/$1");
-$routes->get("equipmentadmin/(:num)/delete", "EquipmentAdmin::confirmDelete/$1");
+// $routes->post("equipmentadmin/edit/(:num)", "EquipmentAdmin::edit/$1");
+
+// Route for confirming deletion (GET request)
+// $routes->get("equipmentadmin/confirmDelete/(:num)", "EquipmentAdmin::confirmDelete/$1");
+
+// // Route for deleting equipment (DELETE request)
+// $routes->delete("equipmentadmin/delete/(:num)", "EquipmentAdmin::delete/$1");
+
+
+// Route for confirming deletion (GET request)
+$routes->get('equipmentadmin/(:num)/delete', 'EquipmentAdmin::confirmDelete/$1');
+
+// Route for deleting equipment (DELETE request)
+$routes->delete('equipmentadmin/delete/(:num)', 'EquipmentAdmin::delete/$1');
+$routes->post('equipmentadmin/delete/(:num)', 'EquipmentAdmin::delete/$1');
+$routes->get('equipmentadmin/delete', function () {
+    return redirect()->to('/equipmentadmin')->with('error', 'Invalid request.');
+});
+
+// $routes->get('equipmentadmin/confirmDelete/(:num)', 'EquipmentAdmin::confirmDelete/$1');
+// $routes->delete('equipmentadmin/delete/(:num)', 'EquipmentAdmin::delete/$1');
+
 
 
 //these are all the routes for the equipmentstaff controller
 $routes->get("equipmentstaff", "EquipmentStaff::index");
 $routes->get("equipmentstaff/(:num)", "EquipmentStaff::show/$1");
 
+$routes->get('login', 'Auth::login', ['as' => 'login']); // Login page
+$routes->post('login', 'Auth::login'); // Handle login form submission
+$routes->get('logout', 'Auth::logout', ['as' => 'logout']); // Logout functionality
+
+
+// $routes->get('equipmentadmin', 'EquipmentAdmin::index'); // Admin page
+// $routes->get('equipmentstaff', 'EquipmentStaff::index'); // Staff page
 
 // $routes->get('login', 'Auth::login', ['as' => 'login']);
 // $routes->post('login', 'Auth::attemptLogin');

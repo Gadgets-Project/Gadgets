@@ -41,9 +41,11 @@ class EquipmentAdmin extends BaseController
     public function create()
     {
         $data = $this->request->getPost();
+        dd($data);
         if ($this->model->save($data)) {
             return redirect()->to('/equipmentadmin')->with('message', 'Equipment created successfully');
         }
+        dd($this->model->errors());
         return redirect()->back()->withInput()->with('errors', $this->model->errors());
     }
 
@@ -66,7 +68,7 @@ class EquipmentAdmin extends BaseController
 
         $data = $this->request->getPost();
         if ($this->model->update($id, $data)) {
-            return redirect()->to('/equipmentadmin/' . $id)->with('message', 'Equipment updated successfully');
+            return redirect()->to('/equipmentadmin')->with('message', 'Equipment updated successfully');
         }
         return redirect()->back()->withInput()->with('errors', $this->model->errors());
     }
@@ -85,7 +87,7 @@ class EquipmentAdmin extends BaseController
     {
         $equipment = $this->model->find($id);
         if (!$equipment) {
-            throw new PageNotFoundException("Equipment with ID $id not found");
+            throw new \CodeIgniter\Exceptions\PageNotFoundException("Equipment with ID $id not found");
         }
 
         $this->model->delete($id);

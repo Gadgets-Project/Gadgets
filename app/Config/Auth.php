@@ -26,6 +26,7 @@ use CodeIgniter\Shield\Authentication\Passwords\NothingPersonalValidator;
 use CodeIgniter\Shield\Authentication\Passwords\PwnedValidator;
 use CodeIgniter\Shield\Authentication\Passwords\ValidatorInterface;
 use CodeIgniter\Shield\Models\UserModel;
+use App\Models\CustomUserModel;
 
 class Auth extends ShieldAuth
 {
@@ -418,6 +419,10 @@ class Auth extends ShieldAuth
         'permissions_users' => 'auth_permissions_users',
     ];
 
+    public array $models = [
+        'user' => CustomUserModel::class, // Use the custom user model
+    ];
+
     /**
      * --------------------------------------------------------------------
      * User Provider
@@ -439,20 +444,29 @@ class Auth extends ShieldAuth
     public function loginRedirect(): string
     {
 
-            // $session = session();
-            // $user = $session->get('user');
+            $session = session();
+            $user = $session->get('user');
 
-            // if ($user && $user->is_admin) {
+            // Debug the session data
+            dd($user);
+
+            // Check if $user is an array and convert it to an object
+            if (is_array($user)) {
+                $user = (object) $user;
+            }
+
+            if ($user && isset($user->user_type_id) && $user->user_type_id == 2) {
             //     $url = setting('Auth.redirects')['admin_login'];
             // } else {
             //     $url = $session->getTempdata('beforeLoginUrl') ?? setting('Auth.redirects')['login'];
-            // }
+                return '/equipmentadmin';
+            }
 
             // return $this->getUrl($url);
             
             // $session = session();
             // $url     = $session->getTempdata('beforeLoginUrl') ?? setting('Auth.redirects')['login'];
-            return $this->getUrl('/equipmentstaff');
+            return '/equipmentstaff';
             // return $this->getUrl($url);
     }
 

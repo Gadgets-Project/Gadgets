@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class EquipmentAdminTableModel extends Model
 {
     protected $table = "equipment";
-
+    protected $primaryKey = 'equipment_id';
     protected $allowedFields = ['equipment_id', 'equipment_type', 'brand', 'serial_number', 'model', 'equipment_status_id', 'equipment_type_id'];
 
     protected $returnType = \App\Entities\EquipmentAdmin::class;
